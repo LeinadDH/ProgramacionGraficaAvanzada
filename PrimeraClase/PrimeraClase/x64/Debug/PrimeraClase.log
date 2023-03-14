@@ -1,5 +1,4 @@
 ﻿  Main.cpp
-D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\PrimeraClase\Main.cpp(70,22): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
 glfw3.lib(init.obj) : warning LNK4099: no se encontró PDB '' con 'glfw3.lib(init.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 glfw3.lib(window.obj) : warning LNK4099: no se encontró PDB '' con 'glfw3.lib(window.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 glfw3.lib(input.obj) : warning LNK4099: no se encontró PDB '' con 'glfw3.lib(input.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
@@ -15,4 +14,4 @@ glfw3.lib(win32_joystick.obj) : warning LNK4099: no se encontró PDB '' con 'glf
 glfw3.lib(wgl_context.obj) : warning LNK4099: no se encontró PDB '' con 'glfw3.lib(wgl_context.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 glfw3.lib(egl_context.obj) : warning LNK4099: no se encontró PDB '' con 'glfw3.lib(egl_context.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 glfw3.lib(osmesa_context.obj) : warning LNK4099: no se encontró PDB '' con 'glfw3.lib(osmesa_context.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-  PrimeraClase.vcxproj -> D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\x64\Debug\PrimeraClase.exe
+  PrimeraClase.vcxproj -> C:\Users\Usuario\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\x64\Debug\PrimeraClase.exe

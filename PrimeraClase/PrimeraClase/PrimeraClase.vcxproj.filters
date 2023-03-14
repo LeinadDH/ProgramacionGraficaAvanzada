@@ -16,6 +16,9 @@
     <Filter Include="Archivos de recursos\Shaders">
       <UniqueIdentifier>{5088583f-1c07-4d05-bb96-11f2ca0729b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de recursos\Textures">
+      <UniqueIdentifier>{503d959d-7bac-4682-ba50-5a514c97e860}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\glad.c">
@@ -34,6 +37,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="shaderClass.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="stb.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,23 +64,10 @@
     <None Include="default.vert">
       <Filter>Archivos de recursos\Shaders</Filter>
     </None>
-    <None Include="inner.frag">
-      <Filter>Archivos de recursos\Shaders</Filter>
-    </None>
-    <None Include="inner.vert">
-      <Filter>Archivos de recursos\Shaders</Filter>
-    </None>
-    <None Include="examenOne.frag">
-      <Filter>Archivos de recursos\Shaders</Filter>
-    </None>
-    <None Include="examenOne.vert">
-      <Filter>Archivos de recursos\Shaders</Filter>
-    </None>
-    <None Include="examTwo.frag">
-      <Filter>Archivos de recursos\Shaders</Filter>
-    </None>
-    <None Include="examTwo.vert">
-      <Filter>Archivos de recursos\Shaders</Filter>
-    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="popCat.jpg">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
