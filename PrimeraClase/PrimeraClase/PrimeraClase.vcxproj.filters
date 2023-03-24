@@ -69,5 +69,8 @@
     <Image Include="popCat.jpg">
       <Filter>Archivos de recursos\Textures</Filter>
     </Image>
+    <Image Include="Kirbo.jpg">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

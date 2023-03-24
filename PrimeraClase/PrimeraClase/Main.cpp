@@ -10,6 +10,11 @@
 
 int main()
 {
+    float timeValue = glfwGetTime();
+    float redValue = sin(timeValue) / 2.0f + 0.5f;
+    float greenValue = 0.0f;
+    float blueValue = 0.0f;
+
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -58,13 +63,15 @@ int main()
     int widthTx, heightTx, numCol;
     stbi_set_flip_vertically_on_load(true);
 
-    unsigned char* bytes = stbi_load("popCat.jpg", &widthTx, &heightTx, &numCol, 0);
+    unsigned char* bytes = stbi_load("Kirbo.jpg", &widthTx, &heightTx, &numCol, 0);
+
+    
 
     std::cout << widthTx << std::endl;
     std::cout << heightTx << std::endl;
     std::cout << numCol << std::endl;
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthTx, heightTx, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, widthTx, heightTx, 0, GL_RGB, GL_UNSIGNED_BYTE, bytes);
     
     //Se genera Textura
 
@@ -101,7 +108,6 @@ int main()
     while (!glfwWindowShouldClose(window))
     {   
         glBindTexture(GL_TEXTURE_2D, texture);
-        
 
         glClearColor(0.0f, 0.0f, 0.0f, 1);
         glClear(GL_COLOR_BUFFER_BIT);
