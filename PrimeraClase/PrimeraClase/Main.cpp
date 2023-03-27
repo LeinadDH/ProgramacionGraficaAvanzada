@@ -65,8 +65,6 @@ int main()
 
     unsigned char* bytes = stbi_load("Kirbo.jpg", &widthTx, &heightTx, &numCol, 0);
 
-    
-
     std::cout << widthTx << std::endl;
     std::cout << heightTx << std::endl;
     std::cout << numCol << std::endl;
@@ -101,34 +99,37 @@ int main()
 
     GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
     GLuint tex0uni = glGetUniformLocation(shaderProgram.ID, "tex0");
-    GLuint texColor = glGetUniformLocation(shaderProgram.ID, "color");
+    GLuint texOffset = glGetUniformLocation(shaderProgram.ID, "offset");
 
     shaderProgram.Activate();
     glUniform1i(tex0uni, 0);
 
     while (!glfwWindowShouldClose(window))
-    {   
-        // Calcular el color deseado basado en el tiempo (opcional)
-        float timeValue = glfwGetTime();
-        float redValue = sin(timeValue) / 10.0f + 0.5f;
-        float greenValue = sin(timeValue) / 5.0f + 0.5f;
-        float blueValue = sin(timeValue) / 0.5f + 1.0f;
-
-        // Establecer el valor del uniform vec3 para el color deseado usando glUniform3f o similar
-        glUniform4f(texColor, redValue, greenValue, blueValue, 1.0f);
-
+    {
         glBindTexture(GL_TEXTURE_2D, texture);
+        float timeValue = glfwGetTime();
+
+        // Calcular el desplazamiento de las coordenadas de textura basado en el tiempo o en la entrada del usuario
+        float offset_x = cos(timeValue) * 0.5f;
+        float offset_y = sin(timeValue) * 0.5f;
+
+        // Establecer el valor del uniform vec2 para el desplazamiento de las coordenadas de textura usando glUniform2f o similar
+        glUniform2f(texOffset, offset_x, 1.0f);
+
+        // Establecer el valor del uniform sampler2D para la textura usando texUnit del objeto Texture correspondiente
+        glUniform1i(tex0uni, 0);
 
         glClearColor(0.0f, 0.0f, 0.0f, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        // Dibujar la geometría con la animación de texturas UV aplicada
         shaderProgram.Activate();
         glUniform1f(uniID, 0.5f);
         VAO1.Bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+        // Intercambiar buffers y manejar eventos
         glfwSwapBuffers(window);
-
         glfwPollEvents();
     }
 

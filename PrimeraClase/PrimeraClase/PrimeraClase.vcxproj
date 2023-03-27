@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Verde4\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Verde4\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Usuario\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Usuario\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Usuario\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Usuario\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
