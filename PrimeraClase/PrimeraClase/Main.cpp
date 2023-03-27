@@ -101,12 +101,22 @@ int main()
 
     GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
     GLuint tex0uni = glGetUniformLocation(shaderProgram.ID, "tex0");
+    GLuint texColor = glGetUniformLocation(shaderProgram.ID, "color");
 
     shaderProgram.Activate();
     glUniform1i(tex0uni, 0);
 
     while (!glfwWindowShouldClose(window))
     {   
+        // Calcular el color deseado basado en el tiempo (opcional)
+        float timeValue = glfwGetTime();
+        float redValue = sin(timeValue) / 10.0f + 0.5f;
+        float greenValue = sin(timeValue) / 5.0f + 0.5f;
+        float blueValue = sin(timeValue) / 0.5f + 1.0f;
+
+        // Establecer el valor del uniform vec3 para el color deseado usando glUniform3f o similar
+        glUniform4f(texColor, redValue, greenValue, blueValue, 1.0f);
+
         glBindTexture(GL_TEXTURE_2D, texture);
 
         glClearColor(0.0f, 0.0f, 0.0f, 1);
