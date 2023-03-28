@@ -1,6 +1,4 @@
 ﻿  Main.cpp
-C:\Users\Usuario\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\PrimeraClase\Main.cpp(13,21): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\Usuario\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\PrimeraClase\Main.cpp(112,25): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
 glfw3.lib(init.obj) : warning LNK4099: no se encontró PDB '' con 'glfw3.lib(init.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 glfw3.lib(window.obj) : warning LNK4099: no se encontró PDB '' con 'glfw3.lib(window.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 glfw3.lib(input.obj) : warning LNK4099: no se encontró PDB '' con 'glfw3.lib(input.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración

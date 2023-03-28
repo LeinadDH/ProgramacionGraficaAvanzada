@@ -10,11 +10,6 @@
 
 int main()
 {
-    float timeValue = glfwGetTime();
-    float redValue = sin(timeValue) / 2.0f + 0.5f;
-    float greenValue = 0.0f;
-    float blueValue = 0.0f;
-
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -27,10 +22,17 @@ int main()
 
     GLfloat squareVertices[] =
     { //     COORDINATES     /        COLORS      /   TexCoord  //
-    -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Lower left corner
+    -0.4f, -0.70f, 0.0f,     1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Lower left corner
+    -0.4f,  0.25f, 0.0f,     0.0f, 1.0f, 0.0f,    0.0f, 1.0f, // Upper left corner
+     0.4f,  0.25f, 0.0f,     0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Upper right corner
+     0.4f, -0.70f, 0.0f,     1.0f, 1.0f, 1.0f,    1.0f, 0.0f  // Lower right corner
+
+     /*
+     - 0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Lower left corner
     -0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,    0.0f, 1.0f, // Upper left corner
      0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Upper right corner
      0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,    1.0f, 0.0f  // Lower right corner
+     */
     };
 
     GLuint squareIndices[] =
@@ -77,7 +79,6 @@ int main()
     stbi_image_free(bytes);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-
     //se crean shaders
 
     Shader shaderProgram("default.vert", "default.frag");
@@ -99,7 +100,7 @@ int main()
 
     GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
     GLuint tex0uni = glGetUniformLocation(shaderProgram.ID, "tex0");
-    GLuint texOffset = glGetUniformLocation(shaderProgram.ID, "offset");
+    GLuint texAxis = glGetUniformLocation(shaderProgram.ID, "mirrorAxis");;
 
     shaderProgram.Activate();
     glUniform1i(tex0uni, 0);
@@ -107,24 +108,15 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         glBindTexture(GL_TEXTURE_2D, texture);
-        float timeValue = glfwGetTime();
 
-        // Calcular el desplazamiento de las coordenadas de textura basado en el tiempo o en la entrada del usuario
-        float offset_x = cos(timeValue) * 0.5f;
-        float offset_y = sin(timeValue) * 0.5f;
-
-        // Establecer el valor del uniform vec2 para el desplazamiento de las coordenadas de textura usando glUniform2f o similar
-        glUniform2f(texOffset, offset_x, 1.0f);
-
-        // Establecer el valor del uniform sampler2D para la textura usando texUnit del objeto Texture correspondiente
-        glUniform1i(tex0uni, 0);
+        // Establecer el valor del uniform float para el eje de espejo usando glUniform1f o similar
+        glUniform1f(uniID, 0.25f);
+        glUniform1f(texAxis, 1.0f);
 
         glClearColor(0.0f, 0.0f, 0.0f, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Dibujar la geometría con la animación de texturas UV aplicada
-        shaderProgram.Activate();
-        glUniform1f(uniID, 0.5f);
+        // Dibujar la geometría con la animación de texturas UV y el efecto de espejo aplicados
         VAO1.Bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
