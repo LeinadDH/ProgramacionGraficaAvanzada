@@ -8,7 +8,7 @@ uniform float mirrorAxis; // (iii) Crear un uniform float para el eje de espejo 
 void main()
 {
     // Calcular las nuevas coordenadas de textura (UV) reflejadas sobre el eje de espejo
-    vec2 modifiedTexCoord = vec2(texCoord.x * (1.0 - mirrorAxis) + (1.0 - texCoord.x) * mirrorAxis, texCoord.y * (1.0 - mirrorAxis) + (1.0 - texCoord.y) * mirrorAxis);
+    vec2 modifiedTexCoord = vec2(texCoord.x * (1.0 - 0) + (1.0 - texCoord.x) * 0, texCoord.y * (1.0 - mirrorAxis) + (1.0 - texCoord.y) * mirrorAxis);
 
     // Muestrear la textura en la posición de coordenadas UV reflejadas
     vec4 textureColor = texture(tex0, modifiedTexCoord);

@@ -75,8 +75,8 @@
     <LibraryPath>C:\Users\Usuario\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Usuario\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Usuario\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Kirbo.jpg" />
+    <Image Include="Madelein.jpg" />
     <Image Include="popCat.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

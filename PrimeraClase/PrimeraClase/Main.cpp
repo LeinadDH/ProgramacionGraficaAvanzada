@@ -22,17 +22,18 @@ int main()
 
     GLfloat squareVertices[] =
     { //     COORDINATES     /        COLORS      /   TexCoord  //
-    -0.4f, -0.70f, 0.0f,     1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Lower left corner
-    -0.4f,  0.25f, 0.0f,     0.0f, 1.0f, 0.0f,    0.0f, 1.0f, // Upper left corner
-     0.4f,  0.25f, 0.0f,     0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Upper right corner
-     0.4f, -0.70f, 0.0f,     1.0f, 1.0f, 1.0f,    1.0f, 0.0f  // Lower right corner
+    -0.4f, -0.60f, 0.0f,     1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Lower left corner
+    -0.4f,  0.00f, 0.0f,     0.0f, 1.0f, 0.0f,    0.0f, 1.0f, // Upper left corner
+     0.4f,  0.00f, 0.0f,     0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Upper right corner
+     0.4f, -0.60f, 0.0f,     1.0f, 1.0f, 1.0f,    1.0f, 0.0f  // Lower right corner
+    };
 
-     /*
-     - 0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Lower left corner
-    -0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,    0.0f, 1.0f, // Upper left corner
-     0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Upper right corner
-     0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,    1.0f, 0.0f  // Lower right corner
-     */
+    GLfloat squareVerticesTwo[] =
+    { //     COORDINATES     /        COLORS      /   TexCoord  //
+    -0.4f, 0.00f, 0.0f,     1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Lower left corner
+    -0.4f, 0.60f, 0.0f,     0.0f, 1.0f, 0.0f,    0.0f, 1.0f, // Upper left corner
+     0.4f, 0.60f, 0.0f,     0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Upper right corner
+     0.4f, 0.00f, 0.0f,     1.0f, 1.0f, 1.0f,    1.0f, 0.0f  // Lower right corner
     };
 
     GLuint squareIndices[] =
@@ -65,7 +66,7 @@ int main()
     int widthTx, heightTx, numCol;
     stbi_set_flip_vertically_on_load(true);
 
-    unsigned char* bytes = stbi_load("Kirbo.jpg", &widthTx, &heightTx, &numCol, 0);
+    unsigned char* bytes = stbi_load("Madelein.jpg", &widthTx, &heightTx, &numCol, 0);
 
     std::cout << widthTx << std::endl;
     std::cout << heightTx << std::endl;
@@ -98,26 +99,44 @@ int main()
     VBO1.Unbind();
     EBO1.Unbind();
 
+    //
+
+    VAO VAO2;
+    VAO2.Bind();
+
+    VBO VBO2(squareVerticesTwo, sizeof(squareVerticesTwo));
+
+    EBO EBO2(squareIndices, sizeof(squareIndices));
+
+    VAO2.LinkAttrib(VBO2, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
+    VAO2.LinkAttrib(VBO2, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    VAO2.LinkAttrib(VBO2, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+
+    VAO2.Unbind();
+    VBO2.Unbind();
+    EBO2.Unbind();
+
     GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
     GLuint tex0uni = glGetUniformLocation(shaderProgram.ID, "tex0");
-    GLuint texAxis = glGetUniformLocation(shaderProgram.ID, "mirrorAxis");;
+    GLuint texAxis = glGetUniformLocation(shaderProgram.ID, "mirrorAxis");
 
     shaderProgram.Activate();
+
     glUniform1i(tex0uni, 0);
 
     while (!glfwWindowShouldClose(window))
     {
-        glBindTexture(GL_TEXTURE_2D, texture);
-
-        // Establecer el valor del uniform float para el eje de espejo usando glUniform1f o similar
-        glUniform1f(uniID, 0.25f);
-        glUniform1f(texAxis, 1.0f);
-
         glClearColor(0.0f, 0.0f, 0.0f, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Dibujar la geometría con la animación de texturas UV y el efecto de espejo aplicados
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glUniform1f(uniID, 0.25f);
+        glUniform1f(texAxis, 1.0f);
         VAO1.Bind();
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        glUniform1f(texAxis, 0.0f);
+        VAO2.Bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // Intercambiar buffers y manejar eventos
@@ -128,6 +147,10 @@ int main()
     VAO1.Delete();
     VBO1.Delete();
     EBO1.Delete();
+
+    VAO2.Delete();
+    VBO2.Delete();
+    EBO2.Delete();
 
     shaderProgram.Delete();
 
