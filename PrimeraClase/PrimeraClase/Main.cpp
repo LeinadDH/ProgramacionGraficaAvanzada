@@ -6,8 +6,6 @@
 #include"VBO.h"
 #include"EBO.h"
 #include<stb/stb_image.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 int main()
 {
@@ -22,11 +20,11 @@ int main()
     glfwSetTime(0);
 
     GLfloat squareVertices[] =
-    { //     COORDINATES     /        COLORS      /   TexCoord  //
-    -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Lower left corner
-    -0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,    0.0f, 1.0f, // Upper left corner
-     0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Upper right corner
-     0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,    1.0f, 0.0f  // Lower right corner
+    { // COORDINATES       / COLORS              / TexCoord      / NORMALS             / TANGENTS            / BITANGENTS //
+    -0.5f, -0.5f, 0.0f,    0.0f, 0.0f, 0.0f,     0.0f, 0.0f,     1.0f, 1.0f, 1.0f,     1.0f, 1.0f, 1.0f,     1.0f, 1.0f, 1.0f, // Lower left corner
+    -0.5f, 0.5f, 0.0f,     0.0f, 0.0f, 0.0f,     0.0f, 1.0f,     1.0f, 1.0f, 1.0f,     1.0f, 1.0f, 1.0f,     1.0f, 1.0f, 1.0f, // Upper left corner
+    0.5f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,     1.0f, 1.0f,     1.0f, 1.0f, 1.0f,     1.0f, 1.0f, 1.0f,     1.0f, 1.0f, 1.0f, // Upper right corner
+    0.5f, -0.5f, 0.0f,     0.0f, 0.0f, 0.0f,     1.0f, 0.0f,     1.0f, 1.0f, 1.0f,     1.0f, 1.0f, 1.0f,     1.0f, 1.0f, 1.0f, // Lower right corner
     };
 
     GLuint squareIndices[] =
@@ -59,7 +57,7 @@ int main()
     int widthTx, heightTx, numCol;
     stbi_set_flip_vertically_on_load(true);
 
-    unsigned char* bytes = stbi_load("Guisantes.jpg", &widthTx, &heightTx, &numCol, 0);
+    unsigned char* bytes = stbi_load("Rubik.jpg", &widthTx, &heightTx, &numCol, 0);
 
     std::cout << widthTx << std::endl;
     std::cout << heightTx << std::endl;
@@ -73,6 +71,7 @@ int main()
     stbi_image_free(bytes);
     glBindTexture(GL_TEXTURE_2D, 0);
 
+
     //se crean shaders
 
     Shader shaderProgram("default.vert", "default.frag");
@@ -84,33 +83,27 @@ int main()
 
     EBO EBO1(squareIndices, sizeof(squareIndices));
 
-    VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
-    VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 17 * sizeof(float), (void*)0);
+    VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 17 * sizeof(float), (void*)(3 * sizeof(float)));
+    VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 17 * sizeof(float), (void*)(6 * sizeof(float)));
+    VAO1.LinkAttrib(VBO1, 3, 3, GL_FLOAT, 17 * sizeof(float), (void*)(8 * sizeof(float)));
+    VAO1.LinkAttrib(VBO1, 4, 3, GL_FLOAT, 17 * sizeof(float), (void*)(11 * sizeof(float)));
+    VAO1.LinkAttrib(VBO1, 5, 3, GL_FLOAT, 17 * sizeof(float), (void*)(14 * sizeof(float)));
 
     VAO1.Unbind();
     VBO1.Unbind();
     EBO1.Unbind();
 
     GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
-    GLuint ViewID = glGetUniformLocation(shaderProgram.ID, "view");
-    GLuint tex0uni = glGetUniformLocation(shaderProgram.ID, "tex0");
-    GLuint fogColorID = glGetUniformLocation(shaderProgram.ID, "fogColor");
-    GLuint fogMinDID = glGetUniformLocation(shaderProgram.ID, "fogMinDist");
-    GLuint fogMaxDID = glGetUniformLocation(shaderProgram.ID, "fogMaxDist");
+    GLuint pScale = glGetUniformLocation(shaderProgram.ID, "parallaxScale");
+    GLuint texD = glGetUniformLocation(shaderProgram.ID, "texDiffuse");
+    GLuint texH = glGetUniformLocation(shaderProgram.ID, "texHeight");
+    GLuint texN = glGetUniformLocation(shaderProgram.ID, "texNormal");
 
     shaderProgram.Activate();
-    glUniform1i(tex0uni, 0);
-
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, -1.0f); // Posición inicial de la cámara
-    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f); // Dirección hacia la que apunta la cámara
-    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); // Vector "up" de la cámara
-
-    // Matriz de vista en C++
-    glm::mat4 viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
-    // Establecer el valor del uniform
-    glUniformMatrix4fv(ViewID, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+    glUniform1i(texD, 0);
+    glUniform1i(texH, 0);
+    glUniform1i(texN, 0);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -119,20 +112,15 @@ int main()
         glClearColor(0.0f, 0.0f, 0.0f, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        float fogMaxD = sin(glfwGetTime()) * 1.5f + 3.0f;
+        float pS = sin(glfwGetTime()) * 1.0f + 3.0f;
 
         shaderProgram.Activate();
         glUniform1f(uniID, 0.5f);
-        glUniform3f(fogColorID, 0.5f, 0.5f, 0.5f); // establece el color de la neblina a gris
-        // A mayor distancia entre la niebla menor será la opacidad
-        glUniform1f(fogMinDID, 0.0f);
-        glUniform1f(fogMaxDID, fogMaxD); 
+        glUniform1f(pScale, pS);
         VAO1.Bind();
-
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
-
         glfwPollEvents();
     }
 

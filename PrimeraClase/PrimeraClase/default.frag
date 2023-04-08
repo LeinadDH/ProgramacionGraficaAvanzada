@@ -1,16 +1,32 @@
 #version 330 core
+in vec2 texCoord;
+in vec3 T;
+in vec3 B;
+in vec3 N;
+
 out vec4 FragColor;
-in vec4 viewPos; // Recibimos la posición del vértice en espacio de vista
-in vec2 texCoord; // Recibimos las coordenadas de textura (UV) del Vertex Shader
-uniform sampler2D tex0;
-uniform vec3 fogColor; // Creamos un uniform vec3 para el color de la neblina
-uniform float fogMinDist; // Creamos un uniform float para la distancia mínima de la neblina
-uniform float fogMaxDist; // Creamos un uniform float para la distancia máxima de la neblina
+
+uniform sampler2D texDiffuse;
+uniform sampler2D texNormal;
+uniform sampler2D texHeight;
+uniform float parallaxScale;
 
 void main()
 {
-	vec4 texColor = texture(tex0, texCoord); // Muestreamos la textura en las coordenadas UV
-	float fogIntensity = clamp((length(viewPos) - fogMinDist) / (fogMaxDist - fogMinDist), 0.0, 1.0); // Calculamos la intensidad de la neblina en función de la posición del vértice en espacio de vista, la distancia mínima y máxima de la neblina
-	vec3 foggedColor = mix(texColor.rgb, fogColor, fogIntensity); // Mezclamos el color muestreado con el color de la neblina usando la intensidad de la neblina calculada
-	FragColor = vec4(foggedColor, texColor.a); // Asignamos el color resultante al out vec4 (color de salida)
+    // Parallax mapping
+    float height = texture(texHeight, texCoord).r;
+    vec2 p = parallaxScale * height * normalize(vec2(dot(N, T), dot(N, B)));
+    vec2 newTexCoord = texCoord + p;
+
+    // Sample textures
+    vec3 diffuse = texture(texDiffuse, newTexCoord).rgb;
+    vec3 normal = texture(texNormal, newTexCoord).rgb;
+    normal = normalize(normal * 2.0 - 1.0);
+
+    // Calculate lighting
+    vec3 lightDir = normalize(vec3(1.0, 1.0, 1.0));
+    float diffuseFactor = max(dot(normal, lightDir), 1.0);
+    vec3 color = diffuse * diffuseFactor;
+
+    FragColor = vec4(color, 1.0);
 }

@@ -78,5 +78,11 @@
     <Image Include="Guisantes.jpg">
       <Filter>Archivos de recursos\Textures</Filter>
     </Image>
+    <Image Include="Rubik.jpg">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
+    <Image Include="Wood.jpg">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
