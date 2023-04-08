@@ -6,7 +6,8 @@
 #include"VBO.h"
 #include"EBO.h"
 #include<stb/stb_image.h>
-
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 int main()
 {
@@ -22,18 +23,10 @@ int main()
 
     GLfloat squareVertices[] =
     { //     COORDINATES     /        COLORS      /   TexCoord  //
-    -0.4f, -0.60f, 0.0f,     1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Lower left corner
-    -0.4f,  0.00f, 0.0f,     0.0f, 1.0f, 0.0f,    0.0f, 1.0f, // Upper left corner
-     0.4f,  0.00f, 0.0f,     0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Upper right corner
-     0.4f, -0.60f, 0.0f,     1.0f, 1.0f, 1.0f,    1.0f, 0.0f  // Lower right corner
-    };
-
-    GLfloat squareVerticesTwo[] =
-    { //     COORDINATES     /        COLORS      /   TexCoord  //
-    -0.4f, 0.00f, 0.0f,     1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Lower left corner
-    -0.4f, 0.60f, 0.0f,     0.0f, 1.0f, 0.0f,    0.0f, 1.0f, // Upper left corner
-     0.4f, 0.60f, 0.0f,     0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Upper right corner
-     0.4f, 0.00f, 0.0f,     1.0f, 1.0f, 1.0f,    1.0f, 0.0f  // Lower right corner
+    -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Lower left corner
+    -0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,    0.0f, 1.0f, // Upper left corner
+     0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Upper right corner
+     0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,    1.0f, 0.0f  // Lower right corner
     };
 
     GLuint squareIndices[] =
@@ -46,12 +39,6 @@ int main()
     gladLoadGL();
 
     //Se crea Textura
-
-    GLuint FBO;
-    glGenFramebuffers(1, &FBO);
-
-    // Enlazar el FBO
-    glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
     GLuint texture;
     glGenTextures(1, &texture);
@@ -72,14 +59,14 @@ int main()
     int widthTx, heightTx, numCol;
     stbi_set_flip_vertically_on_load(true);
 
-    unsigned char* bytes = stbi_load("Madelein.jpg", &widthTx, &heightTx, &numCol, 0);
+    unsigned char* bytes = stbi_load("Guisantes.jpg", &widthTx, &heightTx, &numCol, 0);
 
     std::cout << widthTx << std::endl;
     std::cout << heightTx << std::endl;
     std::cout << numCol << std::endl;
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, widthTx, heightTx, 0, GL_RGB, GL_UNSIGNED_BYTE, bytes);
-    
+
     //Se genera Textura
 
     glGenerateMipmap(GL_TEXTURE_2D);
@@ -87,18 +74,6 @@ int main()
     glBindTexture(GL_TEXTURE_2D, 0);
 
     //se crean shaders
-
-    // Crear y unir una textura al FBO
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
-
-    // Verificar si el FBO está completo y funcionando correctamente
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-    {
-        std::cout << "Error al crear el FBO" << std::endl;
-    }
-
-    // Desenlazar el FBO
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     Shader shaderProgram("default.vert", "default.frag");
 
@@ -117,73 +92,53 @@ int main()
     VBO1.Unbind();
     EBO1.Unbind();
 
-    //
-
-    VAO VAO2;
-    VAO2.Bind();
-
-    VBO VBO2(squareVerticesTwo, sizeof(squareVerticesTwo));
-
-    EBO EBO2(squareIndices, sizeof(squareIndices));
-
-    VAO2.LinkAttrib(VBO2, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
-    VAO2.LinkAttrib(VBO2, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    VAO2.LinkAttrib(VBO2, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-
-    VAO2.Unbind();
-    VBO2.Unbind();
-    EBO2.Unbind();
-
     GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+    GLuint ViewID = glGetUniformLocation(shaderProgram.ID, "view");
     GLuint tex0uni = glGetUniformLocation(shaderProgram.ID, "tex0");
-    GLuint texAxis = glGetUniformLocation(shaderProgram.ID, "mirrorAxis");
-    GLuint texKernel = glGetUniformLocation(shaderProgram.ID, "kernelSize");
-    GLuint texHeight = glGetUniformLocation(shaderProgram.ID, "textureHeight");
+    GLuint fogColorID = glGetUniformLocation(shaderProgram.ID, "fogColor");
+    GLuint fogMinDID = glGetUniformLocation(shaderProgram.ID, "fogMinDist");
+    GLuint fogMaxDID = glGetUniformLocation(shaderProgram.ID, "fogMaxDist");
 
     shaderProgram.Activate();
-
     glUniform1i(tex0uni, 0);
+
+    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, -1.0f); // Posición inicial de la cámara
+    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f); // Dirección hacia la que apunta la cámara
+    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); // Vector "up" de la cámara
+
+    // Matriz de vista en C++
+    glm::mat4 viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
+    // Establecer el valor del uniform
+    glUniformMatrix4fv(ViewID, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 
     while (!glfwWindowShouldClose(window))
     {
+        glBindTexture(GL_TEXTURE_2D, texture);
+
         glClearColor(0.0f, 0.0f, 0.0f, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glBindTexture(GL_TEXTURE_2D, texture);
-        glUniform1f(uniID, 0.25f);
-        glUniform1f(texAxis, 1.0f);
-        glUniform1f(texKernel, 1.025f);
-        glUniform1f(texHeight, 1.025f);
+        float fogMaxD = sin(glfwGetTime()) * 1.5f + 3.0f;
+
+        shaderProgram.Activate();
+        glUniform1f(uniID, 0.5f);
+        glUniform3f(fogColorID, 0.5f, 0.5f, 0.5f); // establece el color de la neblina a gris
+        // A mayor distancia entre la niebla menor será la opacidad
+        glUniform1f(fogMinDID, 0.0f);
+        glUniform1f(fogMaxDID, fogMaxD); 
         VAO1.Bind();
+
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        // Pasos 1a y 1b
-
-        glBindTexture(GL_TEXTURE_2D, texture);
-        glUniform1f(uniID, 0.25f);
-        glUniform1f(texAxis, 0.0f);
-        glUniform1f(texKernel, 1.0f);
-        glUniform1f(texHeight, 1.0f);
-
-        // Pasos 1c y 1d
-        VAO2.Bind();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-        
-        // Intercambiar buffers y manejar eventos
         glfwSwapBuffers(window);
+
         glfwPollEvents();
     }
-
-    glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
     VAO1.Delete();
     VBO1.Delete();
     EBO1.Delete();
-
-    VAO2.Delete();
-    VBO2.Delete();
-    EBO2.Delete();
 
     shaderProgram.Delete();
 

@@ -75,5 +75,8 @@
     <Image Include="Madelein.jpg">
       <Filter>Archivos de recursos\Textures</Filter>
     </Image>
+    <Image Include="Guisantes.jpg">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

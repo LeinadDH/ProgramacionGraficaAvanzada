@@ -1,2 +1,3 @@
 ﻿  Main.cpp
-  PrimeraClase.vcxproj -> C:\Users\Verde4\Downloads\BorrarDos\ProgramacionGraficaAvanzada\PrimeraClase\x64\Debug\PrimeraClase.exe
+D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\PrimeraClase\Main.cpp(122,23): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+  PrimeraClase.vcxproj -> D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\x64\Debug\PrimeraClase.exe

@@ -75,8 +75,8 @@
     <LibraryPath>C:\Users\Verde4\Downloads\BorrarDos\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>C:\Users\Verde4\Downloads\BorrarDos\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\Verde4\Downloads\BorrarDos\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -113,6 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +157,7 @@
     <None Include="default.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Guisantes.jpg" />
     <Image Include="Kirbo.jpg" />
     <Image Include="Madelein.jpg" />
     <Image Include="popCat.jpg" />
