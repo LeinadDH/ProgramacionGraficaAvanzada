@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Verde4\Downloads\BorrarDos\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Verde4\Downloads\BorrarDos\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Verde4\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Verde4\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\6to semestre\GraficaAvanzada\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Verde4\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Verde4\Downloads\Borrar\ProgramacionGraficaAvanzada\PrimeraClase\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -158,10 +158,13 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Guisantes.jpg" />
+    <Image Include="Hex.jpg" />
     <Image Include="Kirbo.jpg" />
     <Image Include="Madelein.jpg" />
+    <Image Include="Mandala.jpg" />
     <Image Include="popCat.jpg" />
     <Image Include="Rubik.jpg" />
+    <Image Include="si.jpg" />
     <Image Include="Wood.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

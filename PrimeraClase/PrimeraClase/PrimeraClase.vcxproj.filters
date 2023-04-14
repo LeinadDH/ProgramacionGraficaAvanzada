@@ -84,5 +84,14 @@
     <Image Include="Wood.jpg">
       <Filter>Archivos de recursos\Textures</Filter>
     </Image>
+    <Image Include="Mandala.jpg">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
+    <Image Include="Hex.jpg">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
+    <Image Include="si.jpg">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

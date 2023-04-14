@@ -55,9 +55,9 @@ int main()
     //Variables para textura
 
     int widthTx, heightTx, numCol;
-    stbi_set_flip_vertically_on_load(true);
+    stbi_set_flip_vertically_on_load(false);
 
-    unsigned char* bytes = stbi_load("Rubik.jpg", &widthTx, &heightTx, &numCol, 0);
+    unsigned char* bytes = stbi_load("Hex.jpg", &widthTx, &heightTx, &numCol, 0);
 
     std::cout << widthTx << std::endl;
     std::cout << heightTx << std::endl;
